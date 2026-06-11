@@ -1,0 +1,31 @@
+# docker-compose.yml
+# This file tells Docker how to orchestrate our multiple containers.
+
+version: '3.8'
+
+services:
+  # The name here ('service-a') becomes the internal DNS name!
+  service-a:
+    build: ./service_a
+    # We do NOT map ports to the host machine here.
+    # Service A should only be accessible internally via the Gateway.
+    expose:
+      - "8000"
+
+  service-b:
+    build: ./service_b
+    expose:
+      - "8001"
+    # Depends_on ensures Service A starts before Service B
+    depends_on:
+      - service-a
+
+  gateway:
+    build: ./gateway
+    # Format is "host_port:container_port"
+    # This exposes port 8080 on your actual laptop, routing traffic into the container's 8080.
+    ports:
+      - "8080:8080"
+    depends_on:
+      - service-a
+      - service-b

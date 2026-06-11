@@ -1,0 +1,8 @@
+# We use FastAPI to build the web framework
+fastapi==0.110.0
+
+# Uvicorn is the server that actually runs our FastAPI application
+uvicorn==0.28.0
+
+# Requests allows us to make HTTP calls to backend services
+requests==2.31.0
